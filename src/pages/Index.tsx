@@ -1,6 +1,7 @@
 import { useNavigate } from "react-router-dom";
 import ArcGalleryHero from "@/components/ArcGalleryHero";
 import MemeOfTheDay from "@/components/MemeOfTheDay";
+import MemeSearch from "@/components/MemeSearch";
 import { generations } from "@/data/generations";
 
 const images = generations.map((g) => g.image);
@@ -28,6 +29,8 @@ const Index = () => {
       />
 
       <MemeOfTheDay />
+
+      <MemeSearch />
 
       <section className="relative z-10 px-6 pb-20 max-w-5xl mx-auto">
         <h2 className="text-center text-2xl sm:text-3xl font-bold text-foreground mb-2">
