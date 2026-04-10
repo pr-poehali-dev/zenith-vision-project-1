@@ -1,56 +1,12 @@
+import { useNavigate } from "react-router-dom";
 import ArcGalleryHero from "@/components/ArcGalleryHero";
-
-const generations = [
-  {
-    label: "Gen Alpha",
-    years: "2013–н.в.",
-    emoji: "🦕",
-    color: "#ff6b35",
-    image: "https://cdn.poehali.dev/projects/d3f06570-2115-411f-96cb-8eda841dae5a/files/9eaff6f1-97dd-496a-9eb6-e66576afb1f6.jpg",
-    memes: ["Skibidi Toilet", "Rizz", "Ohio = place of evil", "No cap fr fr"],
-    desc: "Живут в Roblox, говорят на языке, который не понимают родители.",
-  },
-  {
-    label: "Gen Z",
-    years: "1997–2012",
-    emoji: "💀",
-    color: "#a855f7",
-    image: "https://cdn.poehali.dev/projects/d3f06570-2115-411f-96cb-8eda841dae5a/files/7fc197d1-38ba-4a28-9095-4e765a03a2f8.jpg",
-    memes: ["Brainrot", "Slay", "Delulu", "NPC behaviour", "That's so real"],
-    desc: "Ironiya — eto ih yazyk. Никогда не знаешь: смеются или плачут.",
-  },
-  {
-    label: "Миллениалы",
-    years: "1981–1996",
-    emoji: "😂",
-    color: "#3b82f6",
-    image: "https://cdn.poehali.dev/projects/d3f06570-2115-411f-96cb-8eda841dae5a/files/72a62fe9-3ca1-481a-a67c-28bd4016e404.jpg",
-    memes: ["Doge", "Success Kid", "ЧСВ", "Rage Comics", "I can haz"],
-    desc: "Создали интернет-культуру мемов. Теперь их мемы называют «олдскул».",
-  },
-  {
-    label: "Gen X",
-    years: "1965–1980",
-    emoji: "🎸",
-    color: "#10b981",
-    image: "https://cdn.poehali.dev/projects/d3f06570-2115-411f-96cb-8eda841dae5a/files/6920ff0f-a05e-4812-852e-ad08d142a025.jpg",
-    memes: ["This Is Fine (dog)", "Picard facepalm", "Y U NO", "Forever alone"],
-    desc: "Сарказм — их родной язык. Первые настоящие интернет-циники.",
-  },
-  {
-    label: "Бумеры",
-    years: "1946–1964",
-    emoji: "📺",
-    color: "#f59e0b",
-    image: "https://cdn.poehali.dev/projects/d3f06570-2115-411f-96cb-8eda841dae5a/files/0dd60c42-d925-42e0-a772-82bdda3776cf.jpg",
-    memes: ["OK Boomer", "Back in my day", "Chain emails", "Minions quotes"],
-    desc: "Поставят лайк, напишут «Молодёжь не та», перешлют маме.",
-  },
-];
+import { generations } from "@/data/generations";
 
 const images = generations.map((g) => g.image);
 
 const Index = () => {
+  const navigate = useNavigate();
+
   return (
     <main className="relative min-h-screen bg-background">
       <ArcGalleryHero
@@ -81,8 +37,9 @@ const Index = () => {
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
           {generations.map((gen) => (
             <div
-              key={gen.label}
-              className="rounded-2xl border border-border bg-card p-6 flex flex-col gap-3 hover:scale-[1.02] transition-transform duration-200 cursor-pointer"
+              key={gen.id}
+              onClick={() => navigate(`/generation/${gen.id}`)}
+              className="rounded-2xl border border-border bg-card p-6 flex flex-col gap-3 hover:scale-[1.02] transition-transform duration-200 cursor-pointer group"
               style={{ boxShadow: `0 0 24px ${gen.color}22` }}
             >
               <div className="flex items-center gap-3">
@@ -106,15 +63,22 @@ const Index = () => {
               <p className="text-sm text-muted-foreground">{gen.desc}</p>
 
               <div className="flex flex-wrap gap-2 mt-1">
-                {gen.memes.map((meme) => (
+                {gen.memes.slice(0, 4).map((meme) => (
                   <span
-                    key={meme}
+                    key={meme.name}
                     className="text-xs px-2 py-1 rounded-full border"
                     style={{ borderColor: gen.color, color: gen.color }}
                   >
-                    {meme}
+                    {meme.name}
                   </span>
                 ))}
+              </div>
+
+              <div
+                className="mt-auto text-xs font-semibold opacity-0 group-hover:opacity-100 transition-opacity"
+                style={{ color: gen.color }}
+              >
+                Читать подробнее →
               </div>
             </div>
           ))}
